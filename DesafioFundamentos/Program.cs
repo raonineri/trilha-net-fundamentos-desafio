@@ -1,4 +1,5 @@
-﻿using DesafioFundamentos.Models;
+﻿using DesafioFundamentos.Enum;
+using DesafioFundamentos.Models;
 
 // Coloca o encoding para UTF8 para exibir acentuação
 Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -29,21 +30,30 @@ while (exibirMenu)
     Console.WriteLine("3 - Listar veículos");
     Console.WriteLine("4 - Encerrar");
 
-    switch (Console.ReadLine())
+    string entradaMenu = Console.ReadLine();
+    OpcoesMenu opcoes = new OpcoesMenu();
+
+    if (!Enum.TryParse<OpcoesMenu>(entradaMenu, out opcoes) || !Enum.IsDefined<OpcoesMenu>(opcoes))
     {
-        case "1":
+        Console.WriteLine("Opção inválida");
+        continue;
+    }
+
+    switch (opcoes)
+    {
+        case OpcoesMenu.CadastrarVeiculo:
             es.AdicionarVeiculo();
             break;
 
-        case "2":
+        case OpcoesMenu.RemoverVeiculo:
             es.RemoverVeiculo();
             break;
 
-        case "3":
+        case OpcoesMenu.ListarVeiculos:
             es.ListarVeiculos();
             break;
 
-        case "4":
+        case OpcoesMenu.Encerrar:
             exibirMenu = false;
             break;
 
